@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>About Court Case App</h2>
+<p>The Court Case App is designed to bridge the gap between citizens and legal professionals. Our mission
+    is to provide transparent and timely updates on court cases, ensuring that citizens are well-informed about their legal matters.</p>
+<p>With features like lawyer search by specialization, direct case updates, and secure dashboards, we aim to make the legal process more accessible and understandable for everyone.</p>
+<p>Whether you're a citizen seeking legal assistance or a lawyer looking to connect with clients, the Court Case App is here to support you every step of the way.</p>
+<div class="features-section">
+    <h3>Key Features</h3>
+    <ul>
+        <li><strong>Lawyer Directory:</strong> Search and connect with qualified legal professionals by specialization</li>
+        <li><strong>Case Tracking:</strong> Real-time updates and notifications about your court hearings</li>
+        <li><strong>Secure Dashboard:</strong> Manage your cases and documents in a private, encrypted space</li>
+        <li><strong>Legal Resources:</strong> Access helpful guides and information about the legal process</li>
+        <li><strong>Communication:</strong> Direct messaging with your lawyer and case updates</li>
+    </ul>
+</div>
+
+<div class="contact-section">
+    <h3>Get Started</h3>
+    <p>Ready to manage your court cases more efficiently? <a href="{% url 'signup' %}">Create an account</a> today or <a href="{% url 'contact' %}">contact us</a> for more information.</p>
+</div>
+{% endblock %}

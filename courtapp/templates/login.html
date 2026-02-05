@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<style>
+  .login-card {
+    width: 350px;
+    margin: 100px auto;
+    padding: 30px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .login-card h2 {
+    margin-bottom: 20px;
+  }
+
+  .role-box {
+    margin-bottom: 15px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #d4af37;
+    border: none;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .error {
+    color: red;
+    margin-top: 10px;
+  }
+</style>
+
+<div class="login-card">
+  <h2>Login</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <!-- ROLE -->
+    <div class="role-box">
+      <label>
+        <input type="radio" name="role" value="LAWYER" required> Lawyer
+      </label>
+      &nbsp;&nbsp;
+      <label>
+        <input type="radio" name="role" value="CLIENT" required> Client
+      </label>
+    </div>
+
+    <!-- USERNAME -->
+    <input type="text" name="username" placeholder="Username / Email" required>
+
+    <!-- PASSWORD -->
+    <input type="password" name="password" placeholder="Password" required>
+
+    <button type="submit">Login</button>
+
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+  </form>
+</div>
+
+{% endblock %}

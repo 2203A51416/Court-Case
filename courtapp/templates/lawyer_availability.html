@@ -1,0 +1,23 @@
+{% block content %}
+<h2>Assigned Cases</h2>
+
+<div class="card-grid">
+  {% for case in cases %}
+    <div class="glass-card">
+      <h3>{{ case.title }}</h3>
+      <p>Client: {{ case.client_name }}</p>
+
+      <form method="post">
+        {% csrf_token %}
+        <textarea name="update" placeholder="Enter update"></textarea>
+        <br><br>
+        <button class="btn primary" type="submit">Submit Update</button>
+      </form>
+    </div>
+  {% empty %}
+    <div class="glass-card">
+      <p>No cases assigned yet.</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

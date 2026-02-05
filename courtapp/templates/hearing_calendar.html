@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}Hearing Calendar{% endblock %}
+
+{% block content %}
+
+<style>
+.calendar {
+  max-width: 900px;
+  margin: 40px auto;
+  color: white;
+}
+
+.hearing-card {
+  background: rgba(0,0,0,0.65);
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+}
+
+.date {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffd36d;
+}
+</style>
+
+<div class="calendar">
+
+  <h2>Hearing Calendar</h2>
+  <hr>
+
+  {% for h in hearings %}
+    <div class="hearing-card">
+
+      <div class="date">
+        {{ h.hearing_date }} — {{ h.hearing_time }}
+      </div>
+
+      <p><b>Case:</b> {{ h.case.case_title }}</p>
+
+      {% if profile.role == 'LAWYER' %}
+        <p><b>Client:</b> {{ h.case.client.user.first_name }}</p>
+      {% else %}
+        <p><b>Lawyer:</b> {{ h.case.lawyer.user.first_name }}</p>
+      {% endif %}
+
+      {% if h.note %}
+        <p><i>{{ h.note }}</i></p>
+      {% endif %}
+
+    </div>
+  {% empty %}
+    <p>No hearings scheduled.</p>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

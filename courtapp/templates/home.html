@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <h1 class="hero-title">SATHYAMEVA JAYATHE</h1>
+
+  <div class="search-box">
+    <input type="text" placeholder="Search lawyers, cases, or services...">
+    <button>Search</button>
+  </div>
+</section>
+
+<!-- ===== SUCCESSFUL INDIAN LAWYERS ===== -->
+<section class="success-lawyers">
+
+  <h2 class="success-title">Successful Indian Lawyers</h2>
+
+  <div class="lawyer-slider">
+    <div class="lawyer-track">
+
+      <!-- Lawyer 1 -->
+      <div class="lawyer-card">
+        <img src="/static/lawyers/cornelia.jpg" alt="Cornelia Sorabji">
+        <h4>Cornelia Sorabji</h4>
+        <p>
+          India’s first woman lawyer. She fought landmark cases
+          for women’s legal and property rights with integrity.
+        </p>
+      </div>
+
+      <!-- Lawyer 2 -->
+      <div class="lawyer-card">
+        <img src="/static/lawyers/indira.jpg" alt="Indira Jaising">
+        <h4>Indira Jaising</h4>
+        <p>
+          Senior Advocate of India, widely respected for her work
+          in constitutional law, gender justice, and human rights.
+        </p>
+      </div>
+
+      <!-- Lawyer 3 -->
+      <div class="lawyer-card">
+        <img src="/static/lawyers/nariman.jpg" alt="Fali Nariman">
+        <h4>Fali Nariman</h4>
+        <p>
+          Legendary constitutional lawyer known for ethical
+          practice and unwavering commitment to the Constitution.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

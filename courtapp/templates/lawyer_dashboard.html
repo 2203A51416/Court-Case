@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% block title %}Lawyer Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+.dashboard {
+  max-width: 1100px;
+  margin: 40px auto;
+  color: white;
+}
+
+hr {
+  border: 1px solid rgba(255,255,255,0.2);
+  margin: 30px 0;
+}
+
+.case-card {
+  background: rgba(0,0,0,0.65);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.case-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.case-desc {
+  margin: 10px 0;
+  opacity: 0.9;
+}
+
+.btn-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.accept-btn {
+  background: #4caf50;
+  padding: 10px 22px;
+  border-radius: 20px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.reject-btn {
+  background: #ff5252;
+  padding: 10px 22px;
+  border-radius: 20px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.hearing-box {
+  margin-top: 12px;
+  padding: 10px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+
+/* ===== STATS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: rgba(0,0,0,0.65);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+</style>
+
+<div class="dashboard">
+
+  <h2>Welcome, {{ profile.user.first_name }}</h2>
+
+  <!-- ================= STATS ================= -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <b>Total Cases</b>
+      <h2>{{ total_cases }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <b>Pending</b>
+      <h2 style="color:#ffd36d;">{{ total_pending }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <b>Accepted</b>
+      <h2 style="color:#6dff6d;">{{ total_accepted }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <b>Rejected</b>
+      <h2 style="color:#ff6d6d;">{{ total_rejected }}</h2>
+    </div>
+
+    <div class="stat-card">
+      <b>Total Hearings</b>
+      <h2 style="color:#6dcaff;">{{ total_hearings }}</h2>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <!-- ================= PENDING CASES ================= -->
+  <h3>Pending Case Requests</h3>
+
+  {% for case in pending_cases %}
+    <div class="case-card">
+
+      <div class="case-title">{{ case.case_title }}</div>
+      <div class="case-desc">{{ case.description }}</div>
+
+      <p>
+        <b>Client:</b>
+        {{ case.client.user.first_name }} ({{ case.client.user.email }})
+      </p>
+
+      <div class="btn-group">
+        <a href="{% url 'accept_case' case.id %}" class="accept-btn">Accept</a>
+        <a href="{% url 'reject_case' case.id %}" class="reject-btn">Reject</a>
+      </div>
+
+    </div>
+  {% empty %}
+    <p>No pending requests.</p>
+  {% endfor %}
+
+  <hr>
+
+  <!-- ================= ACCEPTED CASES ================= -->
+  <h3>Accepted Cases</h3>
+
+  {% for case in accepted_cases %}
+    <div class="case-card">
+
+      <div class="case-title">{{ case.case_title }}</div>
+
+      <p>
+        <b>Client:</b>
+        {{ case.client.user.first_name }} ({{ case.client.user.email }})
+      </p>
+
+      <!-- ADD HEARING -->
+      <form method="post" action="{% url 'add_hearing' case.id %}">
+        {% csrf_token %}
+
+        <input type="date" name="date" required>
+        <input type="time" name="time" required>
+        <input type="text" name="note" placeholder="Hearing note (optional)">
+
+        <button
+          type="submit"
+          style="
+            padding:8px 18px;
+            border:none;
+            border-radius:20px;
+            background:#d4af37;
+            font-weight:bold;
+            cursor:pointer;
+          "
+        >
+          Add Hearing
+        </button>
+      </form>
+
+      <!-- HEARINGS LIST -->
+      {% for h in case.hearings.all %}
+        <div class="hearing-box">
+          📅 {{ h.hearing_date }} — {{ h.hearing_time }}
+          {% if h.note %}
+            <br><i>{{ h.note }}</i>
+          {% endif %}
+        </div>
+      {% empty %}
+        <p style="opacity:0.6;">No hearings added yet.</p>
+      {% endfor %}
+
+    </div>
+  {% empty %}
+    <p>No accepted cases yet.</p>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

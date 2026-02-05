@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Case Updates{% endblock %}
+
+{% block content %}
+<h2>Case Updates</h2>
+
+{% for update in updates %}
+  <p>{{ update.message }} - {{ update.date }}</p>
+{% empty %}
+  <p>No updates available.</p>
+{% endfor %}
+{% endblock %}

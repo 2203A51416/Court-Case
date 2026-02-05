@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %}Client Dashboard{% endblock %}
+
+{% block content %}
+
+<style>
+  .dashboard-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    color: #fff;
+  }
+
+  hr {
+    border: 1px solid rgba(255,255,255,0.2);
+    margin: 30px 0;
+  }
+
+  /* GRID FOR LAWYERS */
+  .lawyer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+  }
+
+  /* LAWYER CARD */
+  .lawyer-card {
+    background: rgba(0,0,0,0.65);
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .lawyer-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  /* FORM */
+  .case-form input,
+  .case-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: none;
+  }
+
+  .case-form textarea {
+    resize: none;
+    height: 100px;
+  }
+
+  .case-form button {
+    background: #d4af37;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* CASE STATUS */
+  .case-card {
+    background: rgba(0,0,0,0.55);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+
+  .accepted { color: #6dff6d; }
+  .rejected { color: #ff6d6d; }
+  .pending { color: #ffd36d; }
+</style>
+
+<div class="dashboard-container">
+
+  <h2>Welcome, {{ profile.user.first_name }}</h2>
+
+  <hr>
+
+  <!-- 🔍 SEARCH LAWYER -->
+  <form method="get" style="margin-bottom:20px;">
+    <input
+      type="text"
+      name="q"
+      placeholder="Search lawyer by name or specialization..."
+      value="{{ query }}"
+      style="
+        padding:10px;
+        border-radius:8px;
+        border:none;
+        width:300px;
+      "
+    >
+
+    <button
+      type="submit"
+      style="
+        padding:10px 20px;
+        border:none;
+        border-radius:20px;
+        background:#d4af37;
+        font-weight:bold;
+        cursor:pointer;
+      "
+    >
+      Search
+    </button>
+  </form>
+
+  <!-- ================= AVAILABLE LAWYERS ================= -->
+  <h3>Available Lawyers</h3>
+
+  <div class="lawyer-grid">
+    {% for l in lawyers %}
+      <div class="lawyer-card">
+
+        <div class="lawyer-name">
+          {{ l.user.first_name }}
+        </div>
+
+        <form class="case-form" method="post" action="{% url 'book_lawyer' l.id %}">
+          {% csrf_token %}
+
+          <input
+            type="text"
+            name="title"
+            placeholder="Case Title"
+            required
+          >
+
+          <textarea
+            name="description"
+            placeholder="Describe your case in detail"
+            required
+          ></textarea>
+
+          <button type="submit">Book Lawyer</button>
+        </form>
+
+      </div>
+    {% empty %}
+      <p>No lawyers available right now.</p>
+    {% endfor %}
+  </div>
+
+  <hr>
+
+  <!-- ================= CASE REQUESTS ================= -->
+  <h3>Your Case Requests</h3>
+
+  {% for c in cases %}
+    <div class="case-card">
+      <b>{{ c.case_title }}</b> —
+
+      {% if c.status == 'ACCEPTED' %}
+        <span class="accepted">ACCEPTED</span><br>
+        Lawyer: {{ c.lawyer.user.first_name }} ({{ c.lawyer.user.email }})
+
+      {% elif c.status == 'REJECTED' %}
+        <span class="rejected">REJECTED</span>
+
+      {% else %}
+        <span class="pending">PENDING</span>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p>No case requests yet.</p>
+  {% endfor %}
+
+</div>
+
+{% endblock %}

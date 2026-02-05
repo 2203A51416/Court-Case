@@ -1,0 +1,196 @@
+/* =========================================================
+   GLOBAL BACKGROUND
+   ========================================================= */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+
+  background-image: url("/static/HOMEPAGE.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* =========================================================
+   DARK OVERLAY
+   ========================================================= */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.navbar {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 12px 20px;
+}
+
+.navbar a {
+  color: white;
+  margin-right: 18px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: #d4af37;
+}
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+.container {
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+  color: white;
+}
+
+/* =========================================================
+   HERO SECTION (TITLE + SEARCH)
+   ========================================================= */
+.hero {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 68px;
+  font-weight: 900;
+  background: linear-gradient(90deg, #d4af37, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+}
+
+
+/* SEARCH BOX */
+.search-box {
+  display: flex;
+  gap: 12px;
+}
+
+.search-box input {
+  width: 420px;
+  padding: 16px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-box button {
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: none;
+  background: #d4af37;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background: #bfa130;
+}
+
+/* =========================================================
+   SUCCESSFUL LAWYERS SECTION
+   ========================================================= */
+.success-lawyers {
+  margin: 100px 0;
+  text-align: center;
+}
+
+/* SECTION TITLE */
+.success-title {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: white;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+/* SLIDER */
+.lawyer-slider {
+  overflow: hidden;
+  width: 100%;
+}
+
+.lawyer-track {
+  display: flex;
+  gap: 30px;
+  animation: slideLawyers 25s linear infinite;
+}
+
+.lawyer-slider:hover .lawyer-track {
+  animation-play-state: paused;
+}
+
+/* LAWYER CARD */
+.lawyer-card {
+  min-width: 320px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-radius: 16px;
+  padding: 22px;
+  color: white;
+  text-align: left;
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
+}
+
+.lawyer-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.lawyer-card p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* AUTO SCROLL ANIMATION */
+@keyframes slideLawyers {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-60%);
+  }
+}
+
+/* =========================================================
+   FOOTER (OPTIONAL, SAFE)
+   ========================================================= */
+.footer {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 60px;
+}
+
+.footer a {
+  color: #d4af37;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
